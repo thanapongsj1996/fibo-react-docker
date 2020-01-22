@@ -14,6 +14,7 @@ after_success:
     - docker build -t thanapong/fibo-server ./server
     - docker build -t thanapong/fibo-worker ./worker
     # Login to the docker CLI
+    # Create docker id & docker password in Travis
     - echo "$DOCKER_PASSWORD" | docker login -u  "$DOCKER_ID"  --password-stdin
     # Take those images and push them to docker hub
     - docker push thanapong/fibo-client
