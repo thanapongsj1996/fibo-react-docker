@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t thanapong/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true thanapong/react-test npm test
+
+after_success:
+    - docker build -t thanapong/fibo-client ./client
+    - docker build -t thanapong/fibo-nginx ./nginx
+    - docker build -t thanapong/fibo-server ./server
+    - docker build -t thanapong/fibo-worker ./worker
+    # Login to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u  "$DOCKER_ID"  --password-stdin
+    # Take those images and push them to docker hub
+    - docker push thanapong/fibo-client
+    - docker push thanapong/fibo-nginx
+    - docker push thanapong/fibo-server
+    - docker push thanapong/fibo-worker
