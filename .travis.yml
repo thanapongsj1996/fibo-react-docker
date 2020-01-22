@@ -21,3 +21,16 @@ after_success:
     - docker push thanapongsj/fibo-nginx
     - docker push thanapongsj/fibo-server
     - docker push thanapongsj/fibo-worker
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: ap-southeast-1
+    app: fibo-react-docker
+    env:  FiboReactDocker-env
+    bucket_name: elasticbeanstalk-ap-southeast-1-811572040291
+    bucket_path: fibo-react-docker
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
