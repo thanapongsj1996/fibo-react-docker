@@ -3,10 +3,10 @@ services:
     - docker
 
 before_install:
-    - docker build -t thanapong/react-test -f ./client/Dockerfile.dev ./client
+    - docker build -t thanapongsj/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true thanapong/react-test npm test
+    - docker run -e CI=true thanapongsj/react-test npm test
 
 after_success:
     - docker build -t thanapongsj/fibo-client ./client
